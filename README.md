@@ -11,7 +11,7 @@ This development test is used for Java developers. You are requested to develop 
 + Careful choice of tools and data formats
 + Use of production-ready approaches
 
-While no specific time limit is mandated to complete the exercise, you will be asked to provide your code within a given deadline from Sytac HR. You are free to choose any library as long as it can run on the JVM.
+While no specific time limit is mandated to complete the exercise, you will be asked to provide your code within a given deadline. You are free to choose any library as long as it can run on the JVM.
 
 ## Task ##
 
