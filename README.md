@@ -19,8 +19,8 @@ We would like you to write code that will cover the functionality explained belo
 
 + Connect to [Twitter Streaming API 1.1](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/filter-realtime/overview)
     * Use the following values:
-        + Consumer Key: `RLSrphihyR4G2UxvA0XBkLAdl`
-        + Consumer Secret: `FTz2KcP1y3pcLw0XXMX5Jy3GTobqUweITIFy4QefullmpPnKm4`
+        + Consumer Key: `*insertConsumerKey*`
+        + Consumer Secret: `insertConsumerSecret`
     * The app name will be `java-exercise`
     * You will need to login with Twitter
 + Filter messages that track on "bieber"
