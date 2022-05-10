@@ -13,11 +13,11 @@ public class TwitParserUtil {
 
     public List<TwitBundle> groupTwits(List<Twit> twits) {
         List<TwitBundle> groupedTwits = new ArrayList<>();
-        Map<TwitAuthor, List<Twit>> twitsGroupedByUser = twits.stream().collect(Collectors.groupingBy(Twit::getUser));
-        twitsGroupedByUser.forEach((author, authorTwits) -> {
-            Collections.sort(authorTwits);
-            groupedTwits.add(new TwitBundle(author, authorTwits));
-        });
+        Map<TwitAuthor, List<Twit>> twitsGroupedByUser = twits
+                .stream()
+                .collect(Collectors.groupingBy(Twit::getUser));
+
+        twitsGroupedByUser.forEach((author, authorTwits) -> groupedTwits.add(new TwitBundle(author, authorTwits)));
         Collections.sort(groupedTwits);
         return groupedTwits;
     }

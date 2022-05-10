@@ -17,7 +17,7 @@ import org.interview.oauth.util.TwitParserUtil;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.interview.oauth.util.AppConstants.*;
+import static org.interview.oauth.util.AppConstants.TWIT_FILTER_URL;
 
 public class TwitServiceImpl implements TwitService {
     private final TwitterAuthRepository twitterAuthRepository;
@@ -50,6 +50,7 @@ public class TwitServiceImpl implements TwitService {
                     .map(twitParserUtil::parseTwit)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
+                    .sorted(Comparator.comparing(p -> p.getUser().getCreatedAt()))
                     .collect(Collectors.toList());
 
             bundles = twitParserUtil.groupTwits(twits);
