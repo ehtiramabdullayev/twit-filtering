@@ -57,6 +57,8 @@ If you want to, you can also disregard the provided classes or Maven configurati
 You are assigned to you own private repository. Please use your own branch and do not commit on master.
 When the assignment is finished, please create a pull request on the master of this repository, and your contact person will be notified automatically. 
 
+---
+
 # Solution
 Simple solution with Spark
 
