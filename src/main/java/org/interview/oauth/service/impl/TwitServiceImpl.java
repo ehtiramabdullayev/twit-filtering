@@ -1,6 +1,7 @@
 package org.interview.oauth.service.impl;
 
 import com.google.api.client.http.HttpRequestFactory;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import org.interview.oauth.api.model.response.GenericResponse;
 import org.interview.oauth.api.model.response.Response;
@@ -36,7 +37,7 @@ public class TwitServiceImpl implements TwitService {
     @Override
     public GenericResponse<List<TwitBundle>> listTwits() {
         TwitterAuthenticationEntity authentication;
-        List<TwitBundle> bundles;
+        List<TwitBundle> bundles = Lists.newArrayList();
         try {
             authentication = Optional.ofNullable(twitterAuthRepository.getFirst())
                     .orElseThrow(() -> new TwitterAuthenticationException("There is no auth token found, please create a session!"));
@@ -44,16 +45,19 @@ public class TwitServiceImpl implements TwitService {
             Map<String, String> parameters = new HashMap<>();
             parameters.put("track", "bieber");
 
-            List<Twit> twits = httpHelper
+            httpHelper
                     .sendUrlRequestWithParams(factory, TWIT_FILTER_URL, parameters)
                     .stream()
                     .map(twitParserUtil::parseTwit)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .sorted(Comparator.comparing(p -> p.getUser().getCreatedAt()))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList())
+                    .stream()
+                    .collect(Collectors.groupingBy(Twit::getUser))
+                    .forEach((author, authorTwits) -> bundles.add(new TwitBundle(author, authorTwits)));
 
-            bundles = twitParserUtil.groupTwits(twits);
+            Collections.sort(bundles);
 
         } catch (Exception e) {
             return new GenericResponse<>(new Response(500, e.getLocalizedMessage()));

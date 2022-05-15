@@ -52,7 +52,6 @@ public class AuthServiceImpl implements AuthService<TwitterAuthenticationEntity>
             return new GenericResponse<>(new Response(500, e.getLocalizedMessage()));
         }
         return new GenericResponse<>(new Response(200, "SUCCESS"));
-
     }
 
     @Override
