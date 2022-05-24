@@ -17,9 +17,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.inject.Inject;
 import org.interview.oauth.exception.TwitterAuthenticationException;
-
 import java.io.IOException;
-
 import static org.interview.oauth.util.AppConstants.CONSUMER_KEY;
 import static org.interview.oauth.util.AppConstants.CONSUMER_SECRET;
 import static org.interview.oauth.util.AppConstants.AUTHORIZE_URL;
@@ -31,8 +29,7 @@ public class TwitterAuthenticator {
     private final String consumerSecret;
     private String temporaryToken;
     public final HttpTransport TRANSPORT;
-
-
+    
     @Inject
     public TwitterAuthenticator() {
         this.consumerKey = CONSUMER_KEY;
@@ -66,10 +63,8 @@ public class TwitterAuthenticator {
         } catch (IOException e) {
             throw new TwitterAuthenticationException("Unable to acquire temporary token: " + e.getMessage(), e);
         }
-
         return requestTokenResponse;
     }
-
 
     private OAuthCredentialsResponse retrieveAccessTokens(final String providedPin, final OAuthHmacSigner signer, final String token) throws TwitterAuthenticationException {
         OAuthGetAccessToken accessToken = new OAuthGetAccessToken(ACCESS_TOKEN_URL);
@@ -93,13 +88,11 @@ public class TwitterAuthenticator {
         signer.clientSharedSecret = consumerSecret;
         signer.tokenSharedSecret = temporaryToken;
         return retrieveAccessTokens(providedPin, signer, temporaryToken);
-
     }
 
     public HttpRequestFactory getFactory(String tokenSharedSecret, String token) {
         OAuthHmacSigner signer = new OAuthHmacSigner();
         OAuthParameters parameters = new OAuthParameters();
-
         signer.clientSharedSecret = consumerSecret;
         signer.tokenSharedSecret = tokenSharedSecret;
         parameters.consumerKey = consumerKey;
@@ -108,7 +101,7 @@ public class TwitterAuthenticator {
 
         return TRANSPORT.createRequestFactory(parameters);
     }
-
+    
     public String getTemporaryToken() {
         return temporaryToken;
     }
