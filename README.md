@@ -114,7 +114,7 @@ http://localhost:5555/authLink
 
 Example Response
 
-````
+````json
 {
     "body": "https://api.twitter.com/oauth/authorize?oauth_token=AoZsnwAAAAAAt7ElAAABgFxehlY",
     "response": {
@@ -129,14 +129,14 @@ Example Response
 **POST** /createSession - creating a session to fetch the twits
 
 
-````
+````json
 {
 	"pinCode":"1186491"
 }
 ````
 Example Response
 
-````
+````json
 {
     "response": {
         "status": 200,
@@ -154,7 +154,7 @@ http://localhost:5555/sessionList
 
 Example Response
 
-````
+````json
 {
     "body": [
         {
@@ -181,7 +181,7 @@ http://localhost:5555/listTwits
 
 Example Response
 
-````
+````json
 {
     "body": [
         {
