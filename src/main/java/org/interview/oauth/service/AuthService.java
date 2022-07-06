@@ -1,7 +1,6 @@
 package org.interview.oauth.service;
 
 import org.interview.oauth.api.model.response.GenericResponse;
-
 import java.util.List;
 
 public interface AuthService<T> {

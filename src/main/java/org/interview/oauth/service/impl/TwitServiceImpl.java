@@ -14,24 +14,21 @@ import org.interview.oauth.service.TwitService;
 import org.interview.oauth.twitter.TwitterAuthenticator;
 import org.interview.oauth.util.HttpHelper;
 import org.interview.oauth.util.TwitParserUtil;
-
 import java.util.*;
 import java.util.stream.Collectors;
-
+import static com.google.api.client.http.HttpStatusCodes.STATUS_CODE_OK;
+import static com.google.api.client.http.HttpStatusCodes.STATUS_CODE_SERVER_ERROR;
+import static org.interview.oauth.util.AppConstants.SUCCESS;
 import static org.interview.oauth.util.AppConstants.TWIT_FILTER_URL;
 
 public class TwitServiceImpl implements TwitService {
     private final TwitterAuthRepository twitterAuthRepository;
     private final TwitterAuthenticator authenticator;
-    private final HttpHelper httpHelper;
-    private final TwitParserUtil twitParserUtil;
 
     @Inject
     public TwitServiceImpl(TwitterAuthRepository twitterAuthRepository, TwitterAuthenticator authenticator) {
         this.twitterAuthRepository = twitterAuthRepository;
         this.authenticator = authenticator;
-        httpHelper = new HttpHelper();
-        twitParserUtil = new TwitParserUtil();
     }
 
     @Override
@@ -45,10 +42,10 @@ public class TwitServiceImpl implements TwitService {
             Map<String, String> parameters = new HashMap<>();
             parameters.put("track", "bieber");
 
-            httpHelper
+            HttpHelper
                     .sendUrlRequestWithParams(factory, TWIT_FILTER_URL, parameters)
                     .stream()
-                    .map(twitParserUtil::parseTwit)
+                    .map(TwitParserUtil::parseTwit)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .sorted(Comparator.comparing(p -> p.getUser().getCreatedAt()))
@@ -60,16 +57,8 @@ public class TwitServiceImpl implements TwitService {
             Collections.sort(bundles);
 
         } catch (Exception e) {
-            return new GenericResponse<>(new Response(500, e.getLocalizedMessage()));
+            return new GenericResponse<>(new Response(STATUS_CODE_SERVER_ERROR, e.getLocalizedMessage()));
         }
-        return new GenericResponse<>(Collections.unmodifiableList(bundles), new Response(200, "SUCCESS"));
-    }
-
-    public HttpHelper getHttpHelper() {
-        return httpHelper;
-    }
-
-    public TwitParserUtil getTwitParserUtil() {
-        return twitParserUtil;
+        return new GenericResponse<>(Collections.unmodifiableList(bundles), new Response(STATUS_CODE_OK, SUCCESS));
     }
 }

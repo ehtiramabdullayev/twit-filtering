@@ -3,8 +3,8 @@ package org.interview.oauth.domain;
 import java.util.List;
 
 public class TwitBundle implements Comparable<TwitBundle> {
-    private TwitAuthor author;
-    private List<Twit> twits;
+    private final TwitAuthor author;
+    private final List<Twit> twits;
 
     public TwitBundle(TwitAuthor author, List<Twit> twits) {
         this.author = author;

@@ -9,11 +9,10 @@ import org.interview.oauth.model.TwitterAuthenticationEntity;
 import org.interview.oauth.repo.TwitterAuthRepository;
 import org.interview.oauth.service.AuthService;
 import org.interview.oauth.twitter.TwitterAuthenticator;
-
 import java.util.List;
-
-import static org.interview.oauth.util.AppConstants.CONSUMER_KEY;
-import static org.interview.oauth.util.AppConstants.CONSUMER_SECRET;
+import static com.google.api.client.http.HttpStatusCodes.STATUS_CODE_OK;
+import static com.google.api.client.http.HttpStatusCodes.STATUS_CODE_SERVER_ERROR;
+import static org.interview.oauth.util.AppConstants.*;
 
 public class AuthServiceImpl implements AuthService<TwitterAuthenticationEntity> {
 
@@ -31,7 +30,7 @@ public class AuthServiceImpl implements AuthService<TwitterAuthenticationEntity>
         try {
             return new GenericResponse<String>(authenticator.getAuthorizeUrl());
         } catch (TwitterAuthenticationException exception) {
-            return new GenericResponse<>(new Response(500, exception.getLocalizedMessage()));
+            return new GenericResponse<>(new Response(STATUS_CODE_SERVER_ERROR, exception.getLocalizedMessage()));
         }
     }
 
@@ -49,9 +48,9 @@ public class AuthServiceImpl implements AuthService<TwitterAuthenticationEntity>
                             response.tokenSecret)
             );
         } catch (Exception e) {
-            return new GenericResponse<>(new Response(500, e.getLocalizedMessage()));
+            return new GenericResponse<>(new Response(STATUS_CODE_SERVER_ERROR, e.getLocalizedMessage()));
         }
-        return new GenericResponse<>(new Response(200, "SUCCESS"));
+        return new GenericResponse<>(new Response(STATUS_CODE_OK, SUCCESS));
     }
 
     @Override

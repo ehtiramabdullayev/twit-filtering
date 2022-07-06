@@ -3,7 +3,6 @@ package org.interview.oauth.repo.impl;
 import com.google.inject.Inject;
 import org.interview.oauth.model.TwitterAuthenticationEntity;
 import org.interview.oauth.repo.TwitterAuthRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

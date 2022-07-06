@@ -7,4 +7,7 @@ public class AppConstants {
     public static final String AUTHORIZE_URL = "https://api.twitter.com/oauth/authorize";
     public static final String ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token";
     public static final String REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token";
+    public static final int REQUIRED_TWIT_COUNT = 100;
+    public static final int TWIT_FETCHING_TIME = 30;
+    public static final String SUCCESS = "SUCCESS";
 }

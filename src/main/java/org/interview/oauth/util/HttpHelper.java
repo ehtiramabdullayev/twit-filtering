@@ -18,44 +18,54 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import static com.google.api.client.http.HttpStatusCodes.STATUS_CODE_OK;
+import static org.interview.oauth.util.AppConstants.REQUIRED_TWIT_COUNT;
+import static org.interview.oauth.util.AppConstants.TWIT_FETCHING_TIME;
 
 public class HttpHelper {
-    public List<String> sendUrlRequestWithParams(HttpRequestFactory httpRequestFactory,
+    public static List<String> sendUrlRequestWithParams(HttpRequestFactory httpRequestFactory,
                                                  String url,
                                                  Map<String, String> params) {
+
         GenericUrl genericUrl = new GenericUrl(url);
         if (Objects.nonNull(params) && !params.isEmpty()) params.forEach(genericUrl::set);
         List<String> twits = null;
         HttpRequest httpRequest;
         try {
             //use duration class
-            httpRequest = httpRequestFactory.buildGetRequest(genericUrl).setConnectTimeout((int) Duration.ofSeconds(30).toMillis());
+            httpRequest = httpRequestFactory
+                    .buildGetRequest(genericUrl)
+                    .setConnectTimeout((int) Duration.ofSeconds(TWIT_FETCHING_TIME).toMillis());
+
             HttpResponse httpResponse = httpRequest.execute();
             if (httpResponse.getStatusCode() == STATUS_CODE_OK) {
                 InputStream content = httpResponse.getContent();
                 twits = fetchStreamLineByLine(content);
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e.getLocalizedMessage());
         }
         return twits;
     }
 
-    private List<String> fetchStreamLineByLine(InputStream gzipInputStream) throws IOException {
+
+    private static List<String> fetchStreamLineByLine(InputStream gzipInputStream) throws IOException {
         ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
         AtomicBoolean receiveUntil = new AtomicBoolean(true);
 
         scheduledExecutor.schedule(() -> {
             receiveUntil.set(false);
-        }, 30, TimeUnit.SECONDS);
+        }, TWIT_FETCHING_TIME, TimeUnit.SECONDS);
 
-        List<String> twits = new ArrayList<>(100);
-        try {
+        List<String> twits = new ArrayList<>(REQUIRED_TWIT_COUNT);
+        try (gzipInputStream) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(gzipInputStream));
             int twitsReceived = 0;
 
-            while ((twitsReceived <= 100) && receiveUntil.get()) {
+            while ((twitsReceived <= REQUIRED_TWIT_COUNT) && receiveUntil.get()) {
+
                 String message = reader.readLine();
+
                 twits.add(message);
                 twitsReceived++;
             }
@@ -63,8 +73,9 @@ public class HttpHelper {
             throw new RuntimeException(e);
         } finally {
             scheduledExecutor.shutdownNow();
-            gzipInputStream.close();
         }
+
         return twits;
     }
+
 }
