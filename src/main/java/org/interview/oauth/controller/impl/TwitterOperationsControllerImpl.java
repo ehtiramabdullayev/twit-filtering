@@ -10,7 +10,6 @@ import org.interview.oauth.service.JsonParsingService;
 import org.interview.oauth.service.TwitService;
 import spark.Request;
 import spark.Response;
-
 import javax.inject.Inject;
 import java.util.List;
 

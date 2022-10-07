@@ -29,10 +29,9 @@ public class HttpHelper {
         GenericUrl genericUrl = new GenericUrl(url);
         if (Objects.nonNull(params) && !params.isEmpty()) params.forEach(genericUrl::set);
         List<String> twits = null;
-        HttpRequest httpRequest;
         try {
             //use duration class
-            httpRequest = httpRequestFactory
+            HttpRequest httpRequest = httpRequestFactory
                     .buildGetRequest(genericUrl)
                     .setConnectTimeout((int) Duration.ofSeconds(TWIT_FETCHING_TIME).toMillis());
 

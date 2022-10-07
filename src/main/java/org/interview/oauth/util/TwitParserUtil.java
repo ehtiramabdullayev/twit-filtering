@@ -7,7 +7,6 @@ import org.interview.oauth.domain.Twit;
 import java.util.Optional;
 
 public class TwitParserUtil {
-
     public static Optional<Twit> parseTwit(String string) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -16,5 +15,4 @@ public class TwitParserUtil {
             return Optional.empty();
         }
     }
-
 }

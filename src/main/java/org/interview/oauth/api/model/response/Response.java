@@ -4,7 +4,7 @@ public class Response {
     private final int status;
     private final String message;
 
-    public Response(int status, String message) {
+    public Response(final int status, final String message) {
         this.status = status;
         this.message = message;
     }

@@ -7,11 +7,11 @@ public class TwitterAuthenticationEntity {
     private final String token;
     private final String tokenSecret;
 
-    public TwitterAuthenticationEntity(String consumerKey,
-                                       String consumerSecret,
-                                       String temporaryToken,
-                                       String token,
-                                       String tokenSecret) {
+    public TwitterAuthenticationEntity(final String consumerKey,
+                                       final String consumerSecret,
+                                       final String temporaryToken,
+                                       final String token,
+                                       final String tokenSecret) {
         this.consumerKey = consumerKey;
         this.consumerSecret = consumerSecret;
         this.temporaryToken = temporaryToken;

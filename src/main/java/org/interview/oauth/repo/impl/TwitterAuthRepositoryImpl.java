@@ -18,14 +18,14 @@ public class TwitterAuthRepositoryImpl implements TwitterAuthRepository {
     }
 
     @Override
-    public boolean saveAuth(String tempToken, TwitterAuthenticationEntity entity) {
+    public boolean saveAuth(final String tempToken, final TwitterAuthenticationEntity entity) {
         validateTempToken(tempToken);
         auths.put(tempToken, entity);
         return true;
     }
 
     //TODO fix error handling
-    private void validateTempToken(String tempToken) {
+    private void validateTempToken(final String tempToken) {
         if (auths.containsKey(tempToken)) {
             //TODO fix error handling
             throw new IllegalArgumentException("Session already exists or it is not correct!");

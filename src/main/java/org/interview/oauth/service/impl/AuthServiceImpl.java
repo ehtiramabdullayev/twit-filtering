@@ -20,7 +20,8 @@ public class AuthServiceImpl implements AuthService<TwitterAuthenticationEntity>
     private final TwitterAuthenticator authenticator;
 
     @Inject
-    public AuthServiceImpl(TwitterAuthRepository twitterAuthRepository, TwitterAuthenticator authenticator) {
+    public AuthServiceImpl(TwitterAuthRepository twitterAuthRepository,
+                           TwitterAuthenticator authenticator) {
         this.twitterAuthRepository = twitterAuthRepository;
         this.authenticator = authenticator;
     }

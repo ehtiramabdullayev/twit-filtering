@@ -6,10 +6,11 @@ public class TwitBundle implements Comparable<TwitBundle> {
     private final TwitAuthor author;
     private final List<Twit> twits;
 
-    public TwitBundle(TwitAuthor author, List<Twit> twits) {
+    public TwitBundle(final TwitAuthor author, final List<Twit> twits) {
         this.author = author;
         this.twits = twits;
     }
+
     public TwitAuthor getAuthor() {
         return author;
     }

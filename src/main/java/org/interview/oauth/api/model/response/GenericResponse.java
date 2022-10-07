@@ -14,7 +14,7 @@ public class GenericResponse<T> {
 
     public GenericResponse(T body) {
         this.body = body;
-        this.response = new Response(STATUS_CODE_OK,SUCCESS);
+        this.response = new Response(STATUS_CODE_OK, SUCCESS);
     }
 
     public GenericResponse(Response response) {
